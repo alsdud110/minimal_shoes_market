@@ -17,4 +17,8 @@ class Cart extends ChangeNotifier {
     userCart.remove(item);
     notifyListeners();
   }
+
+  bool isExistInCart(Item item) {
+    return userCart.contains(item);
+  }
 }

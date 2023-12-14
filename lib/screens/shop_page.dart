@@ -141,18 +141,26 @@ class _ShopPageState extends State<ShopPage> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {
-                                    Provider.of<Cart>(context, listen: false)
-                                        .addCart(items[index]);
+                                    bool isExist = Provider.of<Cart>(context,
+                                            listen: false)
+                                        .isExistInCart(items[index]);
+
+                                    if (!isExist) {
+                                      Provider.of<Cart>(context, listen: false)
+                                          .addCart(items[index]);
+                                    }
 
                                     showDialog(
                                       context: context,
                                       builder: (context) => AlertDialog(
                                         backgroundColor:
                                             Colors.black.withOpacity(0.6),
-                                        title: const Text(
-                                          "Successfully added!",
+                                        title: Text(
+                                          !isExist
+                                              ? "Successfully added!"
+                                              : "Already In The Cart",
                                           textAlign: TextAlign.center,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             color: Colors.white,
                                           ),
                                         ),
