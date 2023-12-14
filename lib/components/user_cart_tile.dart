@@ -28,7 +28,7 @@ class UserCartTile extends StatelessWidget {
           ),
           // shoe name and price
           const SizedBox(
-            width: 20,
+            width: 12,
           ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -38,10 +38,15 @@ class UserCartTile extends StatelessWidget {
                 style:
                     const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
               ),
-              Text(
-                item.shoePrice,
-                style: TextStyle(color: Colors.grey[500], fontSize: 12),
-              ),
+              item.count > 1
+                  ? Text(
+                      "${item.count}개 ${item.shoePrice}",
+                      style: TextStyle(color: Colors.grey[500], fontSize: 11),
+                    )
+                  : Text(
+                      item.shoePrice,
+                      style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                    ),
             ],
           ),
           const Spacer(),

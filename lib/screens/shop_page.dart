@@ -141,13 +141,19 @@ class _ShopPageState extends State<ShopPage> {
                                 ),
                                 child: IconButton(
                                   onPressed: () {
+                                    // 장바구니에 해당 아이템이 존재하는 지 확인
                                     bool isExist = Provider.of<Cart>(context,
                                             listen: false)
                                         .isExistInCart(items[index]);
 
+                                    // 없으면 장바구니에 새로 추가
                                     if (!isExist) {
                                       Provider.of<Cart>(context, listen: false)
                                           .addCart(items[index]);
+                                    } else {
+                                      // 있으면 개수 + 1
+                                      Provider.of<Cart>(context, listen: false)
+                                          .updateCount(items[index]);
                                     }
 
                                     showDialog(
