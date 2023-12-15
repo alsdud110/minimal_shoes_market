@@ -59,3 +59,33 @@
     )
 
     그럼 drawer에서 해놓은걸 appbar에서 적용된다.
+
+
+ 3. 상태관리 Provider 사용
+    - pubspec.yaml 에 provider: 추가 (버전 없이)
+    - main.dart에 MaterialApp을 ChangeNotifierProvier()로 감싼다.
+        - 예:
+            - return ChangeNotifierProvider(
+                create: (context) => Cart(),    // 데이터 변동이 있을 Model class
+                builder: (context, child) => MaterialApp(
+                theme: ThemeData(scaffoldBackgroundColor: Colors.grey[300]),
+                debugShowCheckedModeBanner: false,
+                home: const IntroScreen(),
+            ),
+        );
+    
+    - Model class 에 extends ChangeNotifier 를 받아준다.
+        - 예:
+            - class Model extends ChangeNotifier(
+
+            )
+
+    - Model class 에서 사용할 CRUD메서드 마다 마지막에 notifyListeners(); 를 넣어준다.
+
+    - 상태관리를 받을 페이지들에서 위젯 전체를 Consumer<Model>(
+        builder: (context, value, child) => Container or Column(~~)
+    )
+
+    - 그럼 그 페이지에서 CRUD메서드를 사용하려면 Provider.of<Model>(context, listen: false).메서드(Model 객체);
+
+    - value.메서드도 가능!
