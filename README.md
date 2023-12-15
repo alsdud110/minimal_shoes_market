@@ -1,5 +1,6 @@
 - 이 프로젝트에서 외워야 할 것
 1. bottomNavigationBar 
+    - pubspec.yaml 에 google_nav_bar: ^5.0.6 추가
     - MyBottomNavBar 라는 위젯을 만든다.
     - Function(int?) onTabChange 변수 선언
     - Container(
