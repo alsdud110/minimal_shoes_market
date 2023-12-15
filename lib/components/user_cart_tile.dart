@@ -10,7 +10,7 @@ class UserCartTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 90,
+      height: 120,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: BorderRadius.circular(
@@ -19,35 +19,39 @@ class UserCartTile extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(25),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           // img
           Image(
             image: AssetImage(item.imgPath),
-            height: 50,
-            width: 50,
+            height: 90,
+            width: 60,
           ),
           // shoe name and price
           const SizedBox(
             width: 12,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                item.shoeName,
-                style:
-                    const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
-              ),
-              item.count > 1
-                  ? Text(
-                      "${item.count}개 ${item.shoePrice}",
-                      style: TextStyle(color: Colors.grey[500], fontSize: 11),
-                    )
-                  : Text(
-                      item.shoePrice,
-                      style: TextStyle(color: Colors.grey[500], fontSize: 12),
-                    ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.shoeName,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
+                ),
+                item.count > 1
+                    ? Text(
+                        "${item.count}개 ${item.shoePrice}",
+                        style: TextStyle(color: Colors.grey[500], fontSize: 11),
+                      )
+                    : Text(
+                        item.shoePrice,
+                        style: TextStyle(color: Colors.grey[500], fontSize: 12),
+                      ),
+              ],
+            ),
           ),
           const Spacer(),
           // delete icon
