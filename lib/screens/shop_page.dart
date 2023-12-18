@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/models/item.dart';
+import 'package:nike_shop/screens/cart_page.dart';
 import 'package:provider/provider.dart';
 
 class ShopPage extends StatefulWidget {
@@ -13,6 +14,22 @@ class ShopPage extends StatefulWidget {
 }
 
 class _ShopPageState extends State<ShopPage> {
+  List<int> selectedCount = [0, 0, 0, 0];
+
+  void addCount(int index) {
+    setState(() {
+      selectedCount[index]++;
+    });
+  }
+
+  minusCount(int index) {
+    if (selectedCount[index] > 0) {
+      setState(() {
+        selectedCount[index]--;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<Cart>(
@@ -85,14 +102,17 @@ class _ShopPageState extends State<ShopPage> {
                       color: Colors.grey[100],
                       borderRadius: BorderRadius.circular(8)),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(50),
-                        child: SizedBox(
-                          height: 200,
-                          width: 150,
-                          child: Image(
-                            image: AssetImage(items[index].imgPath),
+                      Center(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(50),
+                          child: SizedBox(
+                            height: 160,
+                            width: 150,
+                            child: Image(
+                              image: AssetImage(items[index].imgPath),
+                            ),
                           ),
                         ),
                       ),
@@ -107,26 +127,69 @@ class _ShopPageState extends State<ShopPage> {
                         ),
                       ),
                       Padding(
+                        padding: const EdgeInsets.only(left: 20.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              items[index].shoeName,
+                              style: const TextStyle(
+                                  fontWeight: FontWeight.bold, fontSize: 18),
+                            ),
+                            Text(
+                              items[index].shoePrice,
+                              style: TextStyle(
+                                  fontSize: 12, color: Colors.grey[500]),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.only(left: 8.0, top: 16),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  items[index].shoeName,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
+                            GestureDetector(
+                              onTap: () => minusCount(index),
+                              child: Container(
+                                height: 25,
+                                width: 25,
+                                decoration:
+                                    BoxDecoration(color: Colors.grey[500]),
+                                child: const Icon(
+                                  Icons.remove,
+                                  color: Colors.white,
                                 ),
-                                Text(
-                                  items[index].shoePrice,
-                                  style: TextStyle(
-                                      fontSize: 12, color: Colors.grey[500]),
-                                ),
-                              ],
+                              ),
                             ),
+                            GestureDetector(
+                              onTap: () => addCount(index),
+                              child: Container(
+                                height: 25,
+                                width: 25,
+                                decoration:
+                                    BoxDecoration(color: Colors.grey[500]),
+                                child: const Icon(
+                                  Icons.add,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                              width: 30,
+                              height: 30,
+                              child: Center(
+                                child: Text("${selectedCount[index]}"),
+                              ),
+                            ),
+                            const Spacer(),
                             Padding(
                               padding: const EdgeInsets.only(top: 8.0),
                               child: Container(
@@ -146,15 +209,30 @@ class _ShopPageState extends State<ShopPage> {
                                             listen: false)
                                         .isExistInCart(items[index]);
 
-                                    // 없으면 장바구니에 새로 추가
-                                    if (!isExist) {
-                                      Provider.of<Cart>(context, listen: false)
-                                          .addCart(items[index]);
-                                    } else {
-                                      // 있으면 개수 + 1
-                                      Provider.of<Cart>(context, listen: false)
-                                          .updateCount(items[index]);
+                                    // 선택한 개수 불러오기
+                                    int count = selectedCount[index];
+
+                                    if (count == 0) {
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => AlertDialog(
+                                          backgroundColor:
+                                              Colors.black.withOpacity(0.6),
+                                          title: const Text(
+                                            "Please Select Counts",
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+
+                                      return;
                                     }
+
+                                    Provider.of<Cart>(context, listen: false)
+                                        .updateCountNum(items[index], count);
 
                                     showDialog(
                                       context: context,
@@ -179,6 +257,9 @@ class _ShopPageState extends State<ShopPage> {
                                         ),
                                       ),
                                     );
+                                    setState(() {
+                                      selectedCount[index] = 0;
+                                    });
                                   },
                                   icon: const Icon(
                                     Icons.add,
