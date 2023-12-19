@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/models/item.dart';
-import 'package:nike_shop/screens/cart_page.dart';
 import 'package:provider/provider.dart';
 
 class ShopPage extends StatefulWidget {
@@ -22,7 +21,7 @@ class _ShopPageState extends State<ShopPage> {
     });
   }
 
-  minusCount(int index) {
+  void minusCount(int index) {
     if (selectedCount[index] > 0) {
       setState(() {
         selectedCount[index]--;
@@ -227,12 +226,16 @@ class _ShopPageState extends State<ShopPage> {
                                           ),
                                         ),
                                       );
-
                                       return;
                                     }
 
-                                    Provider.of<Cart>(context, listen: false)
-                                        .updateCountNum(items[index], count);
+                                    if (isExist) {
+                                      Provider.of<Cart>(context, listen: false)
+                                          .updateCountNum(items[index], count);
+                                    } else {
+                                      Provider.of<Cart>(context, listen: false)
+                                          .addCart(items[index], count);
+                                    }
 
                                     showDialog(
                                       context: context,

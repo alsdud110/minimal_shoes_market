@@ -8,9 +8,9 @@ class Cart extends ChangeNotifier {
     return userCart;
   }
 
-  void addCart(Item item) {
+  void addCart(Item item, int count) {
     if (item.count == 0) {
-      item.count = 1;
+      item.count = count;
     }
     userCart.add(item);
     notifyListeners();
@@ -35,8 +35,7 @@ class Cart extends ChangeNotifier {
   void updateCountNum(Item item, int count) {
     if (item.count == 0) {
       if (count >= 1) {
-        item.count = count;
-        addCart(item);
+        addCart(item, count);
       }
     } else {
       item.count += count;
