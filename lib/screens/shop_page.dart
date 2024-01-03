@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/models/item.dart';
 import 'package:provider/provider.dart';
@@ -55,7 +56,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ),
             ),
-          ),
+          ).animate().fadeIn(duration: const Duration(milliseconds: 1500)),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 20.0),
             child: Center(
@@ -66,7 +67,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ),
             ),
-          ),
+          ).animate().fadeIn(duration: const Duration(milliseconds: 1500)),
           const Padding(
             padding: EdgeInsets.only(left: 22, right: 22, bottom: 16, top: 10),
             child: Row(
@@ -88,7 +89,7 @@ class _ShopPageState extends State<ShopPage> {
                 ),
               ],
             ),
-          ),
+          ).animate().fadeIn(duration: const Duration(milliseconds: 1500)),
           SizedBox(
             height: 410,
             child: ListView.builder(
@@ -279,7 +280,7 @@ class _ShopPageState extends State<ShopPage> {
                 );
               },
               itemCount: 4,
-            ),
+            ).animate().fadeIn(duration: const Duration(milliseconds: 2500)),
           ),
           const SizedBox(
             height: 25,
