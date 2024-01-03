@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nike_shop/components/bottom_nav_bar.dart';
 import 'package:nike_shop/light_theme.dart';
+import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/screens/cart_page.dart';
 import 'package:nike_shop/screens/shop_page.dart';
 import 'package:nike_shop/theme_provider.dart';
@@ -15,6 +17,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    Get.put(Cart());
+    // TODO: implement initState
+    super.initState();
+  }
+
   int _selectedIndex = 0;
 
   void navigateBottomBar(int index) {
@@ -23,7 +32,7 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  final List<Widget> _pages = [const ShopPage(), const CartPage()];
+  final List<Widget> _pages = [const ShopPage(), CartPage()];
 
   @override
   Widget build(BuildContext context) {

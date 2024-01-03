@@ -1,10 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nike_shop/models/item.dart';
 
-class Cart extends ChangeNotifier {
-  List<Item> userCart = [];
+abstract mixin class CartProvier {
+  late final searchCart = Get.find<Cart>();
+}
 
-  List<Item> getUserCart() {
+class Cart extends GetxController {
+  RxList<Item> userCart = <Item>[].obs;
+
+  RxList<Item> getUserCart() {
     return userCart;
   }
 
@@ -13,12 +18,10 @@ class Cart extends ChangeNotifier {
       item.count = count;
     }
     userCart.add(item);
-    notifyListeners();
   }
 
   void removeCart(Item item) {
     userCart.remove(item);
-    notifyListeners();
   }
 
   bool isExistInCart(Item item) {
@@ -29,7 +32,6 @@ class Cart extends ChangeNotifier {
     int count = item.count;
     count++;
     item.count = count;
-    notifyListeners();
   }
 
   void updateCountNum(Item item, int count) {
@@ -40,6 +42,5 @@ class Cart extends ChangeNotifier {
     } else {
       item.count += count;
     }
-    notifyListeners();
   }
 }
