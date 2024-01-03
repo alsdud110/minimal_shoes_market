@@ -3,9 +3,9 @@ import 'package:nike_shop/models/cart.dart';
 import 'package:nike_shop/models/item.dart';
 import 'package:provider/provider.dart';
 
-class UserCartTile extends StatelessWidget {
+class UserCartTile extends StatelessWidget with CartProvier {
   final Item item;
-  const UserCartTile({super.key, required this.item});
+  UserCartTile({super.key, required this.item});
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class UserCartTile extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.delete_forever_outlined),
               onPressed: () {
-                Provider.of<Cart>(context, listen: false).removeCart(item);
+                searchCart.removeCart(item);
               }),
         ],
       ),
