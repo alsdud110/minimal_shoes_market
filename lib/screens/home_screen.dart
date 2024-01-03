@@ -1,7 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_shop/components/bottom_nav_bar.dart';
+import 'package:nike_shop/light_theme.dart';
 import 'package:nike_shop/screens/cart_page.dart';
 import 'package:nike_shop/screens/shop_page.dart';
+import 'package:nike_shop/theme_provider.dart';
+import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -36,6 +40,22 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
+        actions: [
+          Padding(
+            padding: const EdgeInsets.only(right: 16.0),
+            child: CupertinoSwitch(
+              value: Provider.of<ThemeProvider>(context).themeData == lightTheme
+                  ? false
+                  : true,
+              activeColor: CupertinoColors.black,
+              thumbColor: Theme.of(context).colorScheme.primary,
+              onChanged: (bool? value) {
+                Provider.of<ThemeProvider>(context, listen: false)
+                    .toggleTheme();
+              },
+            ),
+          ),
+        ],
       ),
       drawer: Drawer(
         backgroundColor: Colors.grey[900],
